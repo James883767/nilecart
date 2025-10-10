@@ -38,16 +38,6 @@ const App = () => (
                 </ProtectedRoute>
               } />
               <Route path="/admin" element={<Admin />} />
-              <Route path="/profile" element={
-                <ProtectedRoute allowedRoles={['buyer', 'seller', 'admin']}>
-                  <Profile />
-                </ProtectedRoute>
-              } />
-              <Route path="/profile/edit" element={
-                <ProtectedRoute allowedRoles={['buyer', 'seller', 'admin']}>
-                  <Profile />
-                </ProtectedRoute>
-              } />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </CartProvider>

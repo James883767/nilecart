@@ -41,12 +41,14 @@ const Home = () => {
 
   const fetchProducts = async () => {
     try {
+      console.log('Fetching products...');
       const { data, error } = await supabase
         .from('products')
         .select('*')
         .order('created_at', { ascending: false });
 
       if (error) throw error;
+      console.log('Products loaded:', data);
       setProducts(data || []);
     } catch (error: any) {
       console.error('Error fetching products:', error);
@@ -57,6 +59,7 @@ const Home = () => {
   };
 
   const handleAddToCart = (product: Product) => {
+    console.log('Adding product to cart:', product);
     addToCart({
       id: product.id,
       name: product.name,
@@ -223,6 +226,9 @@ const Home = () => {
       </div>
 
       <Footer />
+      
+      {/* Role Test - Remove in production */}
+      <RoleTest />
     </div>
   );
 };

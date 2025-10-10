@@ -57,6 +57,7 @@ const Home = () => {
   };
 
   const handleAddToCart = (product: Product) => {
+    console.log('Adding product to cart:', product);
     addToCart({
       id: product.id,
       name: product.name,

@@ -60,53 +60,14 @@ export const Navbar = () => {
                   </Button>
                 )}
 
-                {/* Buyer Profile Dropdown */}
-                {profile?.role === 'buyer' && (
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" className="gap-2">
-                        <Avatar className="h-6 w-6">
-                          <AvatarFallback>
-                            {profile.full_name?.charAt(0)?.toUpperCase() || 'U'}
-                          </AvatarFallback>
-                        </Avatar>
-                        {profile.full_name || 'Profile'}
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end" className="w-56">
-                      <div className="px-3 py-2">
-                        <p className="text-sm font-medium">{profile.full_name || 'User'}</p>
-                        <p className="text-xs text-muted-foreground">{user?.email}</p>
-                      </div>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem onClick={() => navigate('/profile')}>
-                        <User className="mr-2 h-4 w-4" />
-                        View Profile
-                      </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => navigate('/profile/edit')}>
-                        <Settings className="mr-2 h-4 w-4" />
-                        Edit Profile
-                      </DropdownMenuItem>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem onClick={handleSignOut}>
-                        <LogOut className="mr-2 h-4 w-4" />
-                        Sign Out
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                )}
-
-                {/* Non-buyer users still get the old sign out button */}
-                {profile?.role !== 'buyer' && (
-                  <Button
-                    variant="outline"
-                    onClick={handleSignOut}
-                    className="gap-2"
-                  >
-                    <LogOut className="h-4 w-4" />
-                    Sign Out
-                  </Button>
-                )}
+                <Button
+                  variant="outline"
+                  onClick={handleSignOut}
+                  className="gap-2"
+                >
+                  <LogOut className="h-4 w-4" />
+                  Sign Out
+                </Button>
               </>
             ) : (
               <>
