@@ -142,23 +142,15 @@ const Auth = () => {
         console.log('🔐 Login response:', { data, error });
 
         if (error) {
-          console.error('❌ Login error details:', {
-            message: error.message,
-            status: error.status,
-            name: error.name,
-            code: error.code
-          });
-          
+          console.error('❌ Login error:', error);
           if (error.message.includes('Invalid login credentials')) {
-            setError('Invalid email or password. Please check your credentials and try again.');
+            setError('Invalid email or password. If you just signed up, please check your email and click the confirmation link first.');
           } else if (error.message.includes('Email not confirmed') || error.message.includes('email_not_confirmed')) {
             setError('Please check your email and click the confirmation link before signing in.');
           } else if (error.message.includes('signup_disabled')) {
             setError('Account creation is currently disabled. Please contact support.');
-          } else if (error.message.includes('Too many requests')) {
-            setError('Too many login attempts. Please wait a moment and try again.');
           } else {
-            setError(`Login failed: ${error.message}`);
+            setError(error.message);
           }
           throw error;
         }

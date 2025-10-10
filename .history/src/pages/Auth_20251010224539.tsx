@@ -142,23 +142,15 @@ const Auth = () => {
         console.log('🔐 Login response:', { data, error });
 
         if (error) {
-          console.error('❌ Login error details:', {
-            message: error.message,
-            status: error.status,
-            name: error.name,
-            code: error.code
-          });
-          
+          console.error('❌ Login error:', error);
           if (error.message.includes('Invalid login credentials')) {
-            setError('Invalid email or password. Please check your credentials and try again.');
+            setError('Invalid email or password. If you just signed up, please check your email and click the confirmation link first.');
           } else if (error.message.includes('Email not confirmed') || error.message.includes('email_not_confirmed')) {
             setError('Please check your email and click the confirmation link before signing in.');
           } else if (error.message.includes('signup_disabled')) {
             setError('Account creation is currently disabled. Please contact support.');
-          } else if (error.message.includes('Too many requests')) {
-            setError('Too many login attempts. Please wait a moment and try again.');
           } else {
-            setError(`Login failed: ${error.message}`);
+            setError(error.message);
           }
           throw error;
         }
@@ -380,46 +372,23 @@ const Auth = () => {
           variant="outline"
           size="sm"
           onClick={async () => {
-            console.log('👥 Testing user lookup...');
+            console.log('📧 Testing email configuration...');
             try {
-              // Test if we can query users (this might not work due to RLS)
-              const { data, error } = await supabase.auth.admin.listUsers();
-              console.log('User list result:', { data, error });
-              if (error) {
-                console.log('⚠️ Cannot list users (expected for client-side)');
-              } else {
-                console.log('✅ User list accessible');
-              }
-            } catch (err) {
-              console.log('⚠️ User list test failed (expected for client-side):', err);
-            }
-          }}
-        >
-          Test User Lookup
-        </Button>
-        
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={async () => {
-            console.log('🔐 Testing login with test credentials...');
-            try {
-              const { data, error } = await supabase.auth.signInWithPassword({
-                email: 'test@example.com',
-                password: 'testpassword123'
+              const { data, error } = await supabase.auth.resetPasswordForEmail('test@example.com', {
+                redirectTo: window.location.origin + '/auth'
               });
-              console.log('Test login result:', { data, error });
+              console.log('Email test result:', { data, error });
               if (error) {
-                console.log('❌ Test login failed (expected):', error.message);
+                console.error('❌ Email configuration error:', error);
               } else {
-                console.log('✅ Test login successful');
+                console.log('✅ Email configuration working');
               }
             } catch (err) {
-              console.error('❌ Test login error:', err);
+              console.error('❌ Email test failed:', err);
             }
           }}
         >
-          Test Login
+          Test Email Config
         </Button>
       </div>
     </div>
