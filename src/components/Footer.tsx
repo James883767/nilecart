@@ -9,10 +9,10 @@ export const Footer = () => {
           {/* Company Info */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <ShoppingBag className="h-6 w-6" style={{ color: '#7f03fc' }} />
+              <ShoppingBag className="h-6 w-6" style={{ color: '#fc086a' }} />
               <span className="text-2xl font-bold">
-                <span style={{ color: '#7f03fc' }}>Nile</span>
-                <span className="text-white">Cart</span>
+                <span style={{ color: 'hsl(var(--logo-primary))' }}>Nile</span>
+                <span style={{ color: '#fca708' }}>Cart</span>
               </span>
             </div>
             <p className="text-gray-300 text-sm leading-relaxed">
@@ -40,27 +40,27 @@ export const Footer = () => {
             <h3 className="text-lg font-semibold">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/home" className="text-gray-300 hover:text-white transition-colors text-sm">
+                <Link to="/home" className="text-blue-400 hover:text-blue-300 transition-colors text-sm">
                   Browse Products
                 </Link>
               </li>
               <li>
-                <Link to="/dashboard" className="text-gray-300 hover:text-white transition-colors text-sm">
+                <Link to="/dashboard" className="text-blue-400 hover:text-blue-300 transition-colors text-sm">
                   Seller Dashboard
                 </Link>
               </li>
               <li>
-                <Link to="/auth" className="text-gray-300 hover:text-white transition-colors text-sm">
+                <Link to="/auth" className="text-blue-400 hover:text-blue-300 transition-colors text-sm">
                   Sign In / Sign Up
                 </Link>
               </li>
               <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors text-sm">
+                <a href="#" className="text-blue-400 hover:text-blue-300 transition-colors text-sm">
                   How It Works
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors text-sm">
+                <a href="#" className="text-blue-400 hover:text-blue-300 transition-colors text-sm">
                   Become a Seller
                 </a>
               </li>
@@ -72,27 +72,27 @@ export const Footer = () => {
             <h3 className="text-lg font-semibold">Support</h3>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors text-sm">
+                <a href="#" className="text-blue-400 hover:text-blue-300 transition-colors text-sm">
                   Help Center
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors text-sm">
+                <a href="#" className="text-blue-400 hover:text-blue-300 transition-colors text-sm">
                   Contact Us
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors text-sm">
+                <a href="#" className="text-blue-400 hover:text-blue-300 transition-colors text-sm">
                   Seller Support
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors text-sm">
+                <a href="#" className="text-blue-400 hover:text-blue-300 transition-colors text-sm">
                   Buyer Protection
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors text-sm">
+                <a href="#" className="text-blue-400 hover:text-blue-300 transition-colors text-sm">
                   Report a Problem
                 </a>
               </li>

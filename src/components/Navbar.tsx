@@ -19,10 +19,10 @@ export const Navbar = () => {
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2">
-            <ShoppingBag className="h-6 w-6" style={{ color: '#7f03fc' }} />
+            <ShoppingBag className="h-6 w-6" style={{ color: '#fc086a' }} />
             <span className="text-2xl font-bold">
-              <span style={{ color: '#7f03fc' }}>Nile</span>
-              <span style={{ color: '#000000' }} className="dark:text-white">Cart</span>
+              <span style={{ color: 'hsl(var(--logo-primary))' }}>Nile</span>
+              <span style={{ color: '#fca708' }}>Cart</span>
             </span>
           </Link>
 

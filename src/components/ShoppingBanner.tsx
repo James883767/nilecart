@@ -20,7 +20,7 @@ export const ShoppingBanner = () => {
         </p>
         <div className="flex gap-4">
           <Button size="lg" variant="secondary" className="gap-2">
-            <ShoppingBag className="h-5 w-5" />
+            <ShoppingBag className="h-5 w-5" style={{ color: '#fc086a' }} />
             Shop Now
           </Button>
           <Button size="lg" variant="outline" className="gap-2 bg-white/10 text-white border-white/20 hover:bg-white/20">
@@ -30,7 +30,7 @@ export const ShoppingBanner = () => {
         </div>
       </div>
       <div className="absolute right-0 top-0 h-full w-1/3 opacity-10">
-        <ShoppingBag className="h-full w-full" />
+        <ShoppingBag className="h-full w-full" style={{ color: '#fc086a' }} />
       </div>
     </div>
   );

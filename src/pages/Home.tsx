@@ -179,7 +179,7 @@ const Home = () => {
             
             <Card className="text-center p-6">
               <CardContent className="p-0">
-                <CreditCard className="h-12 w-12 mx-auto mb-4 text-purple-600" />
+                <CreditCard className="h-12 w-12 mx-auto mb-4 text-black" />
                 <h3 className="text-lg font-semibold mb-2">Secure Payments</h3>
                 <p className="text-sm text-muted-foreground">
                   Safe and secure payment processing for all transactions
@@ -201,20 +201,20 @@ const Home = () => {
 
         {/* Stats Section */}
         <div className="mt-16 mb-8">
-          <div className="bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg p-8 text-white text-center">
+          <div className="bg-gradient-to-r from-black to-gray-800 rounded-lg p-8 text-white text-center">
             <h2 className="text-2xl font-bold mb-6">Join South Sudan's Growing Marketplace</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div>
                 <div className="text-3xl font-bold mb-2">500+</div>
-                <div className="text-purple-100">Active Sellers</div>
+                <div className="text-gray-200">Active Sellers</div>
               </div>
               <div>
                 <div className="text-3xl font-bold mb-2">10,000+</div>
-                <div className="text-purple-100">Happy Customers</div>
+                <div className="text-gray-200">Happy Customers</div>
               </div>
               <div>
                 <div className="text-3xl font-bold mb-2">50,000+</div>
-                <div className="text-purple-100">Products Sold</div>
+                <div className="text-gray-200">Products Sold</div>
               </div>
             </div>
           </div>

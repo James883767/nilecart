@@ -176,7 +176,7 @@ const Auth = () => {
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
-            <ShoppingBag className="h-12 w-12 text-primary" />
+            <ShoppingBag className="h-12 w-12" style={{ color: '#fc086a' }} />
           </div>
           <CardTitle className="text-2xl">
             {mode === 'signin' ? 'Welcome Back' : mode === 'signup' ? 'Create Account' : 'Reset Password'}
@@ -321,7 +321,7 @@ const Auth = () => {
                     <button
                       type="button"
                       onClick={() => setMode('signup')}
-                      className="text-primary hover:underline"
+                      className="text-blue-600 hover:text-blue-800 hover:underline"
                     >
                       Sign up
                     </button>
@@ -330,7 +330,7 @@ const Auth = () => {
                     <button
                       type="button"
                       onClick={() => setMode('forgot-password')}
-                      className="text-primary hover:underline"
+                      className="text-blue-600 hover:text-blue-800 hover:underline"
                     >
                       Forgot your password?
                     </button>

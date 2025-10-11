@@ -37,7 +37,7 @@ const Landing = () => {
       
       <section className="container mx-auto px-4 py-20">
         <div className="text-center max-w-3xl mx-auto">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 text-foreground">
             Your Marketplace, Simplified
           </h1>
           <p className="text-xl text-muted-foreground mb-8">
@@ -49,7 +49,7 @@ const Landing = () => {
               onClick={() => navigate('/auth?mode=signup')}
               className="gap-2"
             >
-              <ShoppingBag className="h-5 w-5" />
+              <ShoppingBag className="h-5 w-5" style={{ color: '#fc086a' }} />
               Get Started
             </Button>
             <Button
@@ -77,7 +77,7 @@ const Landing = () => {
 
           <div className="text-center p-6">
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-accent/10 mb-4">
-              <ShoppingBag className="h-8 w-8 text-accent" />
+              <ShoppingBag className="h-8 w-8" style={{ color: '#fc086a' }} />
             </div>
             <h3 className="text-xl font-semibold mb-2">Smart Shopping</h3>
             <p className="text-muted-foreground">
