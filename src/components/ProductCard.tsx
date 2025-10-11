@@ -1,8 +1,9 @@
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ShoppingCart, Trash2 } from 'lucide-react';
+import { ShoppingCart, Trash2, Edit } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { formatCurrency } from '@/lib/currency';
+import { useNavigate } from 'react-router-dom';
 
 interface ProductCardProps {
   id: string;
@@ -13,6 +14,7 @@ interface ProductCardProps {
   seller_id: string;
   onDelete?: (id: string) => void;
   onAddToCart?: () => void;
+  onEdit?: (id: string) => void;
 }
 
 export const ProductCard = ({
@@ -24,12 +26,25 @@ export const ProductCard = ({
   seller_id,
   onDelete,
   onAddToCart,
+  onEdit,
 }: ProductCardProps) => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const isOwner = user?.id === seller_id;
 
+  const handleCardClick = (e: React.MouseEvent) => {
+    // Don't navigate if clicking on buttons
+    if ((e.target as HTMLElement).closest('button')) {
+      return;
+    }
+    navigate(`/product/${id}`);
+  };
+
   return (
-    <Card className="overflow-hidden transition-all hover:shadow-lg">
+    <Card 
+      className="overflow-hidden transition-all hover:shadow-lg cursor-pointer" 
+      onClick={handleCardClick}
+    >
       <div className="aspect-square overflow-hidden bg-muted">
         {image_url ? (
           <img
@@ -55,16 +70,37 @@ export const ProductCard = ({
       </CardContent>
 
       <CardFooter className="p-4 pt-0">
-        {isOwner && onDelete ? (
-          <Button
-            variant="destructive"
-            size="sm"
-            className="w-full gap-2"
-            onClick={() => onDelete(id)}
-          >
-            <Trash2 className="h-4 w-4" />
-            Delete
-          </Button>
+        {isOwner && (onDelete || onEdit) ? (
+          <div className="flex gap-2 w-full">
+            {onEdit && (
+              <Button
+                variant="outline"
+                size="sm"
+                className="flex-1 gap-2"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onEdit(id);
+                }}
+              >
+                <Edit className="h-4 w-4" />
+                Edit
+              </Button>
+            )}
+            {onDelete && (
+              <Button
+                variant="destructive"
+                size="sm"
+                className="flex-1 gap-2"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onDelete(id);
+                }}
+              >
+                <Trash2 className="h-4 w-4" />
+                Delete
+              </Button>
+            )}
+          </div>
         ) : onAddToCart ? (
           <Button
             size="sm"

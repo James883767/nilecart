@@ -41,6 +41,7 @@ const Dashboard = () => {
   const [savingWhatsApp, setSavingWhatsApp] = useState(false);
   const [verificationStatus, setVerificationStatus] = useState<VerificationStatus | null>(null);
   const [showVerificationForm, setShowVerificationForm] = useState(false);
+  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
 
   useEffect(() => {
     if (user) {
@@ -151,6 +152,18 @@ const Dashboard = () => {
     } catch (error: any) {
       toast.error('Failed to delete product');
     }
+  };
+
+  const handleEdit = (id: string) => {
+    const product = products.find(p => p.id === id);
+    if (product) {
+      setEditingProduct(product);
+    }
+  };
+
+  const handleEditSuccess = () => {
+    setEditingProduct(null);
+    fetchProducts(); // Refresh the products list
   };
 
   const handleSignOut = async () => {
@@ -266,7 +279,11 @@ const Dashboard = () => {
                 </CardContent>
               </Card>
               
-              <ProductForm onSuccess={fetchProducts} />
+              <ProductForm 
+                onSuccess={editingProduct ? handleEditSuccess : fetchProducts}
+                product={editingProduct}
+                isEditing={!!editingProduct}
+              />
             </div>
 
             <div className="lg:col-span-2">
@@ -293,6 +310,7 @@ const Dashboard = () => {
                       key={product.id}
                       {...product}
                       onDelete={handleDelete}
+                      onEdit={handleEdit}
                     />
                   ))}
                 </div>

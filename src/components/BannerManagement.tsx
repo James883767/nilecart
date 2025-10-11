@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Plus, Edit, Trash2, Eye } from 'lucide-react';
 import { BannerItem } from './Banner';
+import { ImageUpload } from './ImageUpload';
 
 interface BannerManagementProps {
   banners: BannerItem[];
@@ -127,13 +128,10 @@ export const BannerManagement = ({
                 </div>
                 
                 <div className="space-y-2">
-                  <Label htmlFor="image">Image URL *</Label>
-                  <Input
-                    id="image"
+                  <ImageUpload
                     value={formData.image}
-                    onChange={(e) => setFormData(prev => ({ ...prev, image: e.target.value }))}
-                    placeholder="https://example.com/image.jpg"
-                    required
+                    onChange={(url) => setFormData(prev => ({ ...prev, image: url }))}
+                    folder="banners"
                   />
                 </div>
               </div>

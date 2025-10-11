@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -10,12 +10,25 @@ import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
 import { CATEGORIES } from './CategoryFilter';
+import { ImageUpload } from './ImageUpload';
+
+interface Product {
+  id: string;
+  name: string;
+  description: string | null;
+  price: number;
+  category: string;
+  image_url: string | null;
+  seller_id: string;
+}
 
 interface ProductFormProps {
   onSuccess: () => void;
+  product?: Product | null;
+  isEditing?: boolean;
 }
 
-export const ProductForm = ({ onSuccess }: ProductFormProps) => {
+export const ProductForm = ({ onSuccess, product, isEditing = false }: ProductFormProps) => {
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -24,13 +37,20 @@ export const ProductForm = ({ onSuccess }: ProductFormProps) => {
     price: '',
     category: 'Other',
   });
-  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imageUrl, setImageUrl] = useState<string>('');
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setImageFile(e.target.files[0]);
+  // Initialize form data when editing
+  useEffect(() => {
+    if (isEditing && product) {
+      setFormData({
+        name: product.name,
+        description: product.description || '',
+        price: product.price.toString(),
+        category: product.category,
+      });
+      setImageUrl(product.image_url || '');
     }
-  };
+  }, [isEditing, product]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,46 +59,40 @@ export const ProductForm = ({ onSuccess }: ProductFormProps) => {
     setLoading(true);
 
     try {
-      let image_url = null;
+      const productData = {
+        name: formData.name,
+        description: formData.description || null,
+        price: parseFloat(formData.price),
+        category: formData.category,
+        image_url: imageUrl || null,
+        seller_id: user.id,
+      };
 
-      // Upload image if provided
-      if (imageFile) {
-        const fileExt = imageFile.name.split('.').pop();
-        const fileName = `${user.id}/${Date.now()}.${fileExt}`;
-        
-        const { error: uploadError } = await supabase.storage
-          .from('product-images')
-          .upload(fileName, imageFile);
+      if (isEditing && product) {
+        // Update existing product
+        const { error: updateError } = await supabase
+          .from('products')
+          .update(productData)
+          .eq('id', product.id);
 
-        if (uploadError) throw uploadError;
+        if (updateError) throw updateError;
+        toast.success('Product updated successfully!');
+      } else {
+        // Insert new product
+        const { error: insertError } = await supabase
+          .from('products')
+          .insert(productData);
 
-        const { data: { publicUrl } } = supabase.storage
-          .from('product-images')
-          .getPublicUrl(fileName);
-
-        image_url = publicUrl;
+        if (insertError) throw insertError;
+        toast.success('Product added successfully!');
       }
 
-      // Insert product
-      const { error: insertError } = await supabase
-        .from('products')
-        .insert({
-          name: formData.name,
-          description: formData.description || null,
-          price: parseFloat(formData.price),
-          category: formData.category,
-          image_url,
-          seller_id: user.id,
-        });
-
-      if (insertError) throw insertError;
-
-      toast.success('Product added successfully!');
+      // Reset form
       setFormData({ name: '', description: '', price: '', category: 'Other' });
-      setImageFile(null);
+      setImageUrl('');
       onSuccess();
     } catch (error: any) {
-      toast.error(error.message || 'Failed to add product');
+      toast.error(error.message || `Failed to ${isEditing ? 'update' : 'add'} product`);
     } finally {
       setLoading(false);
     }
@@ -87,7 +101,7 @@ export const ProductForm = ({ onSuccess }: ProductFormProps) => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Add New Product</CardTitle>
+        <CardTitle>{isEditing ? 'Edit Product' : 'Add New Product'}</CardTitle>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -144,29 +158,15 @@ export const ProductForm = ({ onSuccess }: ProductFormProps) => {
           </div>
 
           <div>
-            <Label htmlFor="image">Product Image</Label>
-            <div className="mt-2">
-              <label
-                htmlFor="image"
-                className="flex cursor-pointer items-center justify-center gap-2 rounded-lg border border-input bg-background px-4 py-8 transition-colors hover:bg-muted"
-              >
-                <Upload className="h-5 w-5" />
-                <span className="text-sm">
-                  {imageFile ? imageFile.name : 'Click to upload image'}
-                </span>
-              </label>
-              <input
-                id="image"
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-                className="hidden"
-              />
-            </div>
+            <ImageUpload
+              value={imageUrl}
+              onChange={setImageUrl}
+              folder="products"
+            />
           </div>
 
           <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? 'Adding...' : 'Add Product'}
+            {loading ? (isEditing ? 'Updating...' : 'Adding...') : (isEditing ? 'Update Product' : 'Add Product')}
           </Button>
         </form>
       </CardContent>

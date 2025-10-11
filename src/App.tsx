@@ -12,6 +12,7 @@ import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import Admin from "./pages/Admin";
 import Profile from "./pages/Profile";
+import ProductDetail from "./pages/ProductDetail";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,6 +31,11 @@ const App = () => (
               <Route path="/home" element={
                 <ProtectedRoute allowedRoles={['buyer', 'seller', 'admin']}>
                   <Home />
+                </ProtectedRoute>
+              } />
+              <Route path="/product/:id" element={
+                <ProtectedRoute allowedRoles={['buyer', 'seller', 'admin']}>
+                  <ProductDetail />
                 </ProtectedRoute>
               } />
               <Route path="/dashboard" element={
