@@ -59,8 +59,8 @@ export const SellerVerificationForm = () => {
     if (!user) throw new Error('User not authenticated');
 
     const fileExt = file.name.split('.').pop();
-    const fileName = `${user.id}/${Date.now()}.${fileExt}`;
-    const filePath = `verification/${fileName}`;
+    // Path MUST start with user.id to satisfy Supabase storage RLS policy
+    const filePath = `${user.id}/${Date.now()}.${fileExt}`;
 
     const { error: uploadError } = await supabase.storage
       .from('seller-ids')
