@@ -79,7 +79,7 @@ const Dashboard = () => {
         throw error;
       }
 
-      setVerificationStatus(data);
+      setVerificationStatus(data as VerificationStatus);
     } catch (error: any) {
       // Error handled silently
     }
@@ -179,7 +179,7 @@ const Dashboard = () => {
     <ProtectedRoute allowedRoles={['seller']}>
       <div className="min-h-screen bg-background">
         <Navbar />
-        
+
         <div className="container mx-auto px-4 py-8">
           <div className="mb-8">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -231,9 +231,9 @@ const Dashboard = () => {
               <Shield className="h-4 w-4" />
               <AlertDescription>
                 Complete your seller verification to build trust with buyers and access all seller features.
-                <Button 
-                  variant="outline" 
-                  size="sm" 
+                <Button
+                  variant="outline"
+                  size="sm"
                   className="ml-2"
                   onClick={() => setShowVerificationForm(true)}
                 >
@@ -261,16 +261,16 @@ const Dashboard = () => {
                     <Input
                       id="whatsapp"
                       type="tel"
-                      placeholder="+1234567890"
+                      placeholder="Enter your number"
                       value={whatsappNumber}
                       onChange={(e) => setWhatsappNumber(e.target.value)}
                     />
                     <p className="text-xs text-muted-foreground">
-                      Include country code (e.g., +1 for US)
+                      Include country code (e.g., +211 for South Sudan)
                     </p>
                   </div>
-                  <Button 
-                    onClick={saveWhatsAppNumber} 
+                  <Button
+                    onClick={saveWhatsAppNumber}
                     disabled={savingWhatsApp}
                     className="w-full"
                   >
@@ -278,8 +278,8 @@ const Dashboard = () => {
                   </Button>
                 </CardContent>
               </Card>
-              
-              <ProductForm 
+
+              <ProductForm
                 onSuccess={editingProduct ? handleEditSuccess : fetchProducts}
                 product={editingProduct}
                 isEditing={!!editingProduct}
@@ -288,7 +288,7 @@ const Dashboard = () => {
 
             <div className="lg:col-span-2">
               <h2 className="text-2xl font-semibold mb-4">Your Products</h2>
-              
+
               {loading ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {[...Array(4)].map((_, i) => (
@@ -340,7 +340,7 @@ const Dashboard = () => {
           </div>
         )}
       </div>
-      
+
       <Footer />
     </ProtectedRoute>
   );

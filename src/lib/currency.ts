@@ -1,9 +1,9 @@
 // Currency utility for South Sudanese Pound (SSP)
 export const CURRENCY = {
   code: 'SSP',
-  symbol: '£',
+  symbol: 'SSP',
   name: 'South Sudanese Pound',
-  locale: 'en-GB' // Using GB locale for pound symbol formatting
+  locale: 'en-US' // Use US locale to prevent automatic £ symbol injection by en-GB
 };
 
 // Format currency for display

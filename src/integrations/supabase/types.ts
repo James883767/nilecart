@@ -82,6 +82,42 @@ export type Database = {
         }
         Relationships: []
       }
+      sellers: {
+        Row: {
+          business_name: string | null
+          created_at: string
+          id: string
+          passport_image_url: string
+          passport_number: string
+          updated_at: string
+          user_id: string
+          verification_status: string
+          verified: boolean
+        }
+        Insert: {
+          business_name?: string | null
+          created_at?: string
+          id?: string
+          passport_image_url: string
+          passport_number: string
+          updated_at?: string
+          user_id: string
+          verification_status?: string
+          verified?: boolean
+        }
+        Update: {
+          business_name?: string | null
+          created_at?: string
+          id?: string
+          passport_image_url?: string
+          passport_number?: string
+          updated_at?: string
+          user_id?: string
+          verification_status?: string
+          verified?: boolean
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

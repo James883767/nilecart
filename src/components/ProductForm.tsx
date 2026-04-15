@@ -126,7 +126,7 @@ export const ProductForm = ({ onSuccess, product, isEditing = false }: ProductFo
           </div>
 
           <div>
-            <Label htmlFor="price">Price ($)</Label>
+            <Label htmlFor="price">Price (SSP)</Label>
             <Input
               id="price"
               type="number"
