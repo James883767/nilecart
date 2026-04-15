@@ -39,18 +39,27 @@ export const SellerVerificationForm = () => {
     }
 
     // Validate file size (max 5MB)
-    if (file.size > 5 * 1024 * 1024) {
-      toast.error('File size must be less than 5MB');
+    const fileSizeMB = file.size / (1024 * 1024);
+    if (fileSizeMB > 5) {
+      toast.error(`File size is ${fileSizeMB.toFixed(2)}MB. Maximum allowed is 5MB`);
       return;
     }
 
-    setSelectedFile(file);
-    
-    // Create preview URL for images
+    // Validate image files for corruption
     if (file.type.startsWith('image/')) {
-      const url = URL.createObjectURL(file);
-      setPreviewUrl(url);
+      const img = new Image();
+      img.onload = () => {
+        setSelectedFile(file);
+        const url = URL.createObjectURL(file);
+        setPreviewUrl(url);
+      };
+      img.onerror = () => {
+        toast.error('Invalid or corrupted image file. Please try a different image.');
+      };
+      img.src = URL.createObjectURL(file);
     } else {
+      // PDF files don't need image validation
+      setSelectedFile(file);
       setPreviewUrl(null);
     }
   };

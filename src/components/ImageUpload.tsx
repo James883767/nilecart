@@ -27,26 +27,40 @@ export const ImageUpload = ({
 
   const handleFileSelect = async (file: File) => {
     if (!file.type.startsWith('image/')) {
-      toast.error('Please select an image file');
+      toast.error('Please select a valid image file (PNG, JPG, GIF)');
       return;
     }
 
-    if (file.size > 5 * 1024 * 1024) { // 5MB limit
-      toast.error('Image size must be less than 5MB');
+    const fileSizeMB = file.size / (1024 * 1024);
+    if (fileSizeMB > 5) {
+      toast.error(`Image size is ${fileSizeMB.toFixed(2)}MB. Maximum allowed is 5MB`);
       return;
     }
 
-    setUploading(true);
+    // Validate image dimensions
+    const img = new Image();
+    const validateImage = new Promise<void>((resolve, reject) => {
+      img.onload = () => {
+        resolve();
+      };
+      img.onerror = () => {
+        reject(new Error('Invalid or corrupted image file'));
+      };
+      img.src = URL.createObjectURL(file);
+    });
+
     try {
+      await validateImage;
+      setUploading(true);
       const url = await uploadImage(file, folder);
       if (url) {
         onChange(url);
         toast.success('Image uploaded successfully');
       } else {
-        toast.error('Failed to upload image');
+        toast.error('Failed to upload image. Please check your file and try again.');
       }
-    } catch (error) {
-      toast.error('Failed to upload image');
+    } catch (error: any) {
+      toast.error(error.message || 'Failed to upload image');
     } finally {
       setUploading(false);
     }
